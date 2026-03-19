@@ -83,3 +83,12 @@ if command -v bat >/dev/null 2>&1; then
 fi
 
 alias lg='lazygit'
+
+if grep -qi microsoft /proc/version 2>/dev/null; then
+  if [ -x /mnt/c/Windows/System32/cmd.exe ]; then
+    alias code='/mnt/c/Windows/System32/cmd.exe /C code'
+    alias clip='/mnt/c/Windows/System32/clip.exe'
+    alias paste='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe Get-Clipboard'
+  fi
+fi
+
