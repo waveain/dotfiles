@@ -82,6 +82,22 @@ if command -v bat >/dev/null 2>&1; then
   alias cat="bat"
 fi
 
+if command -v cargo >/dev/null 2>&1; then
+  alias cr='cargo run'
+  alias cb='cargo build'
+  alias cbr='cargo build --release'
+  alias ct='cargo test'
+  alias cc='cargo check'
+  alias ccl='cargo clippy'
+  alias cf='cargo fmt'
+
+  # functions
+  crr() { cargo run --release "$@"; }
+  cw() { cargo watch -x check -x test -x run; }
+  cn() { cargo new "$1" && cd "$1"; }
+  cwrun() { cargo run -p "$1"; }
+fi
+
 alias lg='lazygit'
 
 if grep -qi microsoft /proc/version 2>/dev/null; then
