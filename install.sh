@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# このスクリプトは ~/dotfiles に配置して実行する
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DOTFILES_DIR"
+
 echo "=== START SETUP ==="
+echo "DOTFILES_DIR: $DOTFILES_DIR"
 
 # -------------------------------
 # 基本パッケージ

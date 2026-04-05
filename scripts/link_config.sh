@@ -49,4 +49,17 @@ mkdir -p "$HOME/.config/starship"
 ln -sf "${DOTFILES_DIR}/config/starship/starship.toml" \
        "$HOME/.config/starship/starship.toml"
 
+# -------------------------------
+# gitconfig
+# -------------------------------
+echo "[git]"
+
+if [ -f "$HOME/.gitconfig" ] && [ ! -L "$HOME/.gitconfig" ]; then
+  echo "backup existing .gitconfig -> .gitconfig.backup"
+  cp "$HOME/.gitconfig" "$HOME/.gitconfig.backup"
+fi
+
+ln -sf "${DOTFILES_DIR}/config/git/.gitconfig" \
+       "$HOME/.gitconfig"
+
 echo "=== LINK CONFIG DONE ==="

@@ -19,12 +19,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- プラグイン
 require("lazy").setup({
-  -- 基本ユーティリティ
   {"nvim-lua/plenary.nvim"},
   {"nvim-telescope/telescope.nvim"},
-  {"nvim-treesitter/nvim-treesitter", build=":TSUpdate"},
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 
-  -- ファイルツリー
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = {"nvim-tree/nvim-web-devicons"},
@@ -33,29 +31,25 @@ require("lazy").setup({
     end
   },
 
-  -- Rust LSP
   {"neovim/nvim-lspconfig"},
 
-  -- DAP と DAP UI
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "rcarriga/nvim-dap-ui",       -- UI
-      "nvim-neotest/nvim-nio"       -- DAP / Neotest 共通補助
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio"
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
       dapui.setup()
 
-      -- DAP UI 自動オープン／クローズ
-      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+      dap.listeners.after.event_initialized["dapui_config"]  = function() dapui.open() end
+      dap.listeners.before.event_terminated["dapui_config"]  = function() dapui.close() end
+      dap.listeners.before.event_exited["dapui_config"]      = function() dapui.close() end
     end
   },
 
-  -- Neotest
   {
     "nvim-neotest/neotest",
     dependencies = {
@@ -66,18 +60,16 @@ require("lazy").setup({
     },
     config = function()
       local neotest = require("neotest")
-      neotest.setup({adapters = {require("neotest-rust")}})
+      neotest.setup({ adapters = { require("neotest-rust") } })
 
-      -- キーマッピング
-      vim.keymap.set("n","<leader>tt",function() neotest.run.run() end)
-      vim.keymap.set("n","<leader>tf",function() neotest.run.run(vim.fn.expand("%")) end)
-      vim.keymap.set("n","<leader>ts",function() neotest.run.stop() end)
-      vim.keymap.set("n","<leader>to",function() neotest.output.open({ enter = true }) end)
-      vim.keymap.set("n","<leader>ta",function() neotest.run.attach() end)
+      vim.keymap.set("n", "<leader>tt", function() neotest.run.run() end)
+      vim.keymap.set("n", "<leader>tf", function() neotest.run.run(vim.fn.expand("%")) end)
+      vim.keymap.set("n", "<leader>ts", function() neotest.run.stop() end)
+      vim.keymap.set("n", "<leader>to", function() neotest.output.open({ enter = true }) end)
+      vim.keymap.set("n", "<leader>ta", function() neotest.run.attach() end)
     end
   },
 
-  -- crates.nvim (Cargo.toml 補完)
   {
     "saecki/crates.nvim",
     event = {"BufRead Cargo.toml"},
@@ -88,7 +80,7 @@ require("lazy").setup({
   }
 })
 
--- Rust Analyzer LSP 設定
+-- Rust Analyzer LSP
 vim.lsp.config("rust_analyzer", {
   settings = {
     ["rust-analyzer"] = {
@@ -100,9 +92,9 @@ vim.lsp.config("rust_analyzer", {
 })
 vim.lsp.enable("rust_analyzer")
 
--- 基本キーマッピング
-vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>")
-vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>")
+-- キーマッピング
+vim.keymap.set("n", "<C-n>",      "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set("n", "<C-p>",      "<cmd>Telescope find_files<CR>")
 vim.keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>")
 vim.keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>")

@@ -3,24 +3,12 @@ set -euo pipefail
 
 echo "=== INSTALL RUST TOOLS ==="
 
-# -------------------------------
-# cargoチェック
-# -------------------------------
 if ! command -v cargo >/dev/null 2>&1; then
   echo "Rust is not installed. Please run install_rust.sh first."
   exit 1
 fi
 
-# -------------------------------
-# PATH確認
-# -------------------------------
-if [[ ":$PATH:" != *":$HOME/.cargo/bin:"* ]]; then
-  echo "Warning: ~/.cargo/bin is not in PATH"
-fi
-
-# -------------------------------
-# ツール定義（crate名:コマンド名）
-# -------------------------------
+# crate名:コマンド名 の形式で定義
 TOOLS=(
   "atuin:atuin"
   "zoxide:zoxide"
@@ -28,9 +16,6 @@ TOOLS=(
   "bat:bat"
 )
 
-# -------------------------------
-# インストール
-# -------------------------------
 for entry in "${TOOLS[@]}"; do
   IFS=":" read -r crate cmd <<< "$entry"
 

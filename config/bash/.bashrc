@@ -5,7 +5,7 @@
 # -------------------------------
 add_path() {
   case ":$PATH:" in
-    *":$1:"*) ;; # すでに存在
+    *":$1:"*) ;;
     *) PATH="$1:$PATH" ;;
   esac
 }
@@ -54,7 +54,7 @@ if command -v starship >/dev/null 2>&1; then
 fi
 
 # -------------------------------
-# fdfind対応（保険）
+# fdfind 対応
 # -------------------------------
 if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
   alias fd='fdfind'
@@ -66,8 +66,6 @@ fi
 export HISTSIZE=100000
 export HISTFILESIZE=200000
 shopt -s histappend
-
-# 重複削除（地味に重要）
 HISTCONTROL=ignoredups:erasedups
 
 # -------------------------------
@@ -91,15 +89,15 @@ if command -v cargo >/dev/null 2>&1; then
   alias ccl='cargo clippy'
   alias cf='cargo fmt'
 
-  # functions
   crr() { cargo run --release "$@"; }
-  cw() { cargo watch -x check -x test -x run; }
-  cn() { cargo new "$1" && cd "$1"; }
+  cw()  { cargo watch -x check -x test -x run; }
+  cn()  { cargo new "$1" && cd "$1"; }
   cwrun() { cargo run -p "$1"; }
 fi
 
 alias lg='lazygit'
 
+# WSL 専用エイリアス
 if grep -qi microsoft /proc/version 2>/dev/null; then
   if [ -x /mnt/c/Windows/System32/cmd.exe ]; then
     alias code='/mnt/c/Windows/System32/cmd.exe /C code'
@@ -107,4 +105,3 @@ if grep -qi microsoft /proc/version 2>/dev/null; then
     alias paste='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe Get-Clipboard'
   fi
 fi
-
