@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+source "$DOTFILES_DIR/scripts/detect_os.sh"
+
+echo "==> Detected OS: $(detect_os)"
+
+# --- Install packages ---
+if is_ubuntu; then
+    echo "==> Installing packages..."
+    sudo apt update -q
+    sudo apt install -y $(grep -v '^\s*#' "$DOTFILES_DIR/packages/apt.txt" | tr '\n' ' ')
+
+    # --- Generate locale ---
+    echo "==> Generating locale (en_US.UTF-8)..."
+    sudo locale-gen en_US.UTF-8
+    sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+fi
+
+# --- Back up conflicting files before stowing ---
+backup_conflicts() {
+    local dir="$1"
+    local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+    # --simulate でコンフリクト対象ファイルを取得してバックアップ
+    local conflicts
+    conflicts=$(stow --target="$HOME" --simulate --restow "$dir" 2>&1 \
+        | grep "existing target" \
+        | sed 's/.*existing target is neither a link nor a directory: //' \
+        | sort -u) || true
+    for f in $conflicts; do
+        mkdir -p "$backup_dir/$(dirname "$f")"
+        mv "$HOME/$f" "$backup_dir/$f"
+        echo "    backed up: ~/$f -> $backup_dir/$f"
+    done
+}
+
+# --- Create symlinks (GNU Stow) ---
+echo "==> Creating symlinks..."
+cd "$DOTFILES_DIR"
+for dir in bash git ssh; do
+    backup_conflicts "$dir"
+    stow --target="$HOME" --restow "$dir"
+    echo "    stow: $dir"
+done
+
+echo "==> Done!"
+echo "    Reload your shell: source ~/.bashrc"
+echo ""
+echo "==> To set up SSH key for GitHub, run:"
+echo "    bash $DOTFILES_DIR/scripts/setup_ssh.sh [KEY_NAME]"
+echo ""
+echo "    KEY_NAME: SSH key filename under ~/.ssh/ (default: id_ed25519)"
+echo "    Example:  bash $DOTFILES_DIR/scripts/setup_ssh.sh id_ed25519_wsl"

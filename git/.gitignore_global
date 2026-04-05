@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# 環境
+.env
+.env.local

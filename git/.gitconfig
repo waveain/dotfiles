@@ -1,0 +1,25 @@
+# [user]
+#     name = Your Name
+#     email = your@email.com
+# ↑ 個人情報のため dotfiles には含めない。各自で設定すること:
+#   git config --global user.name "Your Name"
+#   git config --global user.email "your@email.com"
+
+[core]
+    editor = nvim
+    autocrlf = input      # WSL: LFで統一、チェックアウト時はそのまま
+    excludesfile = ~/.gitignore_global
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false
+
+[alias]
+    st = status
+    lg = log --oneline --graph --decorate --all
+
+# ローカル設定（個人情報・秘密情報）を別ファイルに分離
+[include]
+    path = ~/.gitconfig.local

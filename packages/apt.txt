@@ -1,0 +1,6 @@
+git
+curl
+wget
+unzip
+stow
+neovim

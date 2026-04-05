@@ -1,0 +1,7 @@
+# ローカル設定（個人情報・APIキー等）
+*.local.sh
+.gitconfig.local
+
+# SSH 秘密鍵
+ssh/.ssh/id_*
+!ssh/.ssh/id_*.pub
