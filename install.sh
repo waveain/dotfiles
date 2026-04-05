@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- Root check ---
+if [ "$(id -u)" -eq 0 ]; then
+    echo "ERROR: Do not run this script as root. Run as your normal user." >&2
+    exit 1
+fi
+
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 source "$DOTFILES_DIR/scripts/detect_os.sh"
@@ -44,6 +50,18 @@ for dir in bash git ssh; do
     stow --target="$HOME" --restow "$dir"
     echo "    stow: $dir"
 done
+
+# --- WSL default user ---
+if is_wsl; then
+    echo "==> Configuring WSL default user..."
+    CURRENT_USER="$(whoami)"
+    sudo tee /etc/wsl.conf > /dev/null <<EOF
+[user]
+default=$CURRENT_USER
+EOF
+    echo "    /etc/wsl.conf: default user set to '$CURRENT_USER'"
+    echo "    Run 'wsl --terminate <distro>' from PowerShell to apply"
+fi
 
 echo "==> Done!"
 echo "    Reload your shell: source ~/.bashrc"
