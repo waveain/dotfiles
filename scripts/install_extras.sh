@@ -65,9 +65,21 @@ install_zoxide() {
     curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 }
 
-echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide)..."
+# --- Node.js LTS (NodeSource) ---
+install_nodejs() {
+    if command -v node &>/dev/null; then
+        echo "    node: already installed ($(node --version))"
+        return
+    fi
+    echo "    Installing Node.js LTS via NodeSource..."
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo apt install -y nodejs
+}
+
+echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide, node)..."
 install_neovim
 install_gh
 install_eza
 install_zoxide
+install_nodejs
 echo "==> Extra tools installed."

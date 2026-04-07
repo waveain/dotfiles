@@ -3,6 +3,7 @@ curl
 wget
 unzip
 stow
+locales
 neovim
 # シェル操作強化
 fzf
@@ -13,3 +14,4 @@ fd-find
 tmux
 jq
 git-delta
+build-essential
