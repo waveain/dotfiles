@@ -10,12 +10,25 @@ dotfiles/
 │   ├── .bash_profile
 │   ├── .bashrc
 │   └── .config/bash/
-│       ├── aliases.sh     # エイリアス定義
-│       ├── exports.sh     # 環境変数
+│       ├── aliases.sh     # エイリアス定義（eza/bat/fd対応）
+│       ├── exports.sh     # 環境変数（fzf/zoxide設定含む）
 │       └── wsl.sh         # WSL専用設定
 ├── git/
-│   ├── .gitconfig         # Git設定
+│   ├── .gitconfig         # Git設定（delta pager含む）
 │   └── .gitignore_global  # グローバルgitignore
+├── nvim/
+│   └── .config/nvim/
+│       ├── init.lua       # lazy.nvim ブートストラップ
+│       └── lua/
+│           ├── config/
+│           │   ├── options.lua    # vim設定
+│           │   └── keymaps.lua    # キーマップ
+│           └── plugins/
+│               ├── colorscheme.lua  # tokyonight
+│               ├── telescope.lua    # ファジーファインダー
+│               ├── treesitter.lua   # シンタックスハイライト
+│               ├── lsp.lua          # LSP + 補完 (mason/lspconfig/cmp)
+│               └── ui.lua           # lualine + neo-tree
 ├── packages/
 │   └── apt.txt            # aptパッケージ一覧
 ├── ssh/
@@ -23,9 +36,25 @@ dotfiles/
 │       └── config             # SSH設定（GitHub用）
 ├── scripts/
 │   ├── detect_os.sh           # OS検出ユーティリティ
+│   ├── install_extras.sh      # gh/eza/zoxide インストール
 │   └── setup_ssh.sh           # SSHキーセットアップ
 └── install.sh                 # セットアップスクリプト
 ```
+
+## インストールされるツール
+
+| ツール | 用途 |
+|--------|------|
+| `fzf` | あいまい検索（Ctrl+R で履歴検索） |
+| `ripgrep` | 高速grep、neovimとの連携 |
+| `bat` | catの代替（シンタックスハイライト） |
+| `fd-find` | findの代替（高速・使いやすい） |
+| `tmux` | ターミナルマルチプレクサ |
+| `jq` | JSON整形・パース |
+| `git-delta` | git diffの見やすい表示 |
+| `gh` | GitHub CLI |
+| `eza` | lsの代替（カラー・gitステータス表示） |
+| `zoxide` | cdの代替（頻繁に訪れるディレクトリへ即移動） |
 
 ## セットアップ
 
@@ -45,7 +74,8 @@ cd ~/dotfiles
 `install.sh` は以下を行います：
 
 1. `apt.txt` に記載のパッケージをインストール
-2. GNU Stow でシンボリックリンクを作成
+2. `install_extras.sh` で gh / eza / zoxide をインストール
+3. GNU Stow でシンボリックリンクを作成（bash, git, ssh, nvim）
 
 完了後、設定を反映するには：
 

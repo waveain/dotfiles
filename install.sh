@@ -23,6 +23,9 @@ if is_ubuntu; then
     echo "==> Generating locale (en_US.UTF-8)..."
     sudo locale-gen en_US.UTF-8
     sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+    # --- Extra tools (gh, eza, zoxide) ---
+    bash "$DOTFILES_DIR/scripts/install_extras.sh"
 fi
 
 # --- Back up conflicting files before stowing ---
@@ -45,7 +48,7 @@ backup_conflicts() {
 # --- Create symlinks (GNU Stow) ---
 echo "==> Creating symlinks..."
 cd "$DOTFILES_DIR"
-for dir in bash git ssh; do
+for dir in bash git ssh nvim; do
     backup_conflicts "$dir"
     stow --target="$HOME" --restow "$dir"
     echo "    stow: $dir"
@@ -55,10 +58,18 @@ done
 if is_wsl; then
     echo "==> Configuring WSL default user..."
     CURRENT_USER="$(whoami)"
-    sudo tee /etc/wsl.conf > /dev/null <<EOF
-[user]
-default=$CURRENT_USER
-EOF
+    WSL_CONF="/etc/wsl.conf"
+    if grep -q '^\[user\]' "$WSL_CONF" 2>/dev/null; then
+        # [user] セクションが既にある場合は default 行だけ更新
+        sudo sed -i '/^\[user\]/,/^\[/{s/^default\s*=.*/default='"$CURRENT_USER"'/}' "$WSL_CONF"
+        # default 行がなければ [user] セクション直後に追加
+        if ! grep -q '^default=' "$WSL_CONF"; then
+            sudo sed -i '/^\[user\]/a default='"$CURRENT_USER" "$WSL_CONF"
+        fi
+    else
+        # [user] セクションがなければ末尾に追記
+        printf '\n[user]\ndefault=%s\n' "$CURRENT_USER" | sudo tee -a "$WSL_CONF" > /dev/null
+    fi
     echo "    /etc/wsl.conf: default user set to '$CURRENT_USER'"
     echo "    Run 'wsl --terminate <distro>' from PowerShell to apply"
 fi

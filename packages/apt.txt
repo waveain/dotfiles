@@ -4,3 +4,12 @@ wget
 unzip
 stow
 neovim
+# シェル操作強化
+fzf
+ripgrep
+bat
+fd-find
+# 開発ツール
+tmux
+jq
+git-delta
