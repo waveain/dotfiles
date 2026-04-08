@@ -48,11 +48,17 @@ backup_conflicts() {
 # --- Create symlinks (GNU Stow) ---
 echo "==> Creating symlinks..."
 cd "$DOTFILES_DIR"
-for dir in bash git ssh nvim; do
+for dir in bash git ssh nvim mise; do
     backup_conflicts "$dir"
     stow --target="$HOME" --restow "$dir"
     echo "    stow: $dir"
 done
+
+# --- Install mise tools ---
+if command -v mise &>/dev/null; then
+    echo "==> Installing mise tools..."
+    mise install
+fi
 
 # --- WSL default user ---
 if is_wsl; then

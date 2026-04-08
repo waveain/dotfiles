@@ -22,6 +22,13 @@ if command -v fzf &>/dev/null; then
     command -v rg &>/dev/null && export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git"'
 fi
 
+# --- mise (dev tools version manager) ---
+if command -v mise &>/dev/null; then
+    eval "$(mise activate bash)"
+elif [ -f "$HOME/.local/bin/mise" ]; then
+    eval "$("$HOME/.local/bin/mise" activate bash)"
+fi
+
 # --- zoxide (cd の賢い代替) ---
 command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
 

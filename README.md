@@ -34,9 +34,12 @@ dotfiles/
 ├── ssh/
 │   └── .ssh/
 │       └── config             # SSH設定（GitHub用）
+├── mise/
+│   └── .config/mise/
+│       └── config.toml        # mise管理ツール設定（rust/python/uv）
 ├── scripts/
 │   ├── detect_os.sh           # OS検出ユーティリティ
-│   ├── install_extras.sh      # gh/eza/zoxide インストール
+│   ├── install_extras.sh      # gh/eza/zoxide/mise/uv インストール
 │   └── setup_ssh.sh           # SSHキーセットアップ
 └── install.sh                 # セットアップスクリプト
 ```
@@ -55,6 +58,8 @@ dotfiles/
 | `gh` | GitHub CLI |
 | `eza` | lsの代替（カラー・gitステータス表示） |
 | `zoxide` | cdの代替（頻繁に訪れるディレクトリへ即移動） |
+| `mise` | 開発ツールのバージョン管理（rust/python/uv等） |
+| `uv` | 高速Pythonパッケージマネージャ |
 
 ## セットアップ
 
@@ -74,8 +79,9 @@ cd ~/dotfiles
 `install.sh` は以下を行います：
 
 1. `apt.txt` に記載のパッケージをインストール
-2. `install_extras.sh` で gh / eza / zoxide をインストール
-3. GNU Stow でシンボリックリンクを作成（bash, git, ssh, nvim）
+2. `install_extras.sh` で gh / eza / zoxide / mise / uv をインストール
+3. GNU Stow でシンボリックリンクを作成（bash, git, ssh, nvim, mise）
+4. `mise install` で rust / python / uv をインストール
 
 完了後、設定を反映するには：
 

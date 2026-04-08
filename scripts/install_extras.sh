@@ -76,10 +76,34 @@ install_nodejs() {
     sudo apt install -y nodejs
 }
 
-echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide, node)..."
+# --- mise (dev tools version manager) ---
+install_mise() {
+    if command -v mise &>/dev/null; then
+        echo "    mise: already installed ($(mise --version))"
+        return
+    fi
+    echo "    Installing mise..."
+    curl -fsSL https://mise.run | sh
+    echo "    mise: installed"
+}
+
+# --- uv (Python package manager) ---
+install_uv() {
+    if command -v uv &>/dev/null; then
+        echo "    uv: already installed ($(uv --version))"
+        return
+    fi
+    echo "    Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo "    uv: installed"
+}
+
+echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide, node, mise, uv)..."
 install_neovim
 install_gh
 install_eza
 install_zoxide
 install_nodejs
+install_mise
+install_uv
 echo "==> Extra tools installed."
