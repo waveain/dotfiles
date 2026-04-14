@@ -23,14 +23,18 @@ if command -v fzf &>/dev/null; then
 fi
 
 # --- mise (dev tools version manager) ---
-if command -v mise &>/dev/null; then
-    eval "$(mise activate bash)"
-elif [ -f "$HOME/.local/bin/mise" ]; then
-    eval "$("$HOME/.local/bin/mise" activate bash)"
+if [ -z "${MISE_SHELL:-}" ]; then
+    if command -v mise &>/dev/null; then
+        eval "$(mise activate bash)"
+    elif [ -f "$HOME/.local/bin/mise" ]; then
+        eval "$("$HOME/.local/bin/mise" activate bash)"
+    fi
 fi
 
 # --- zoxide (cd の賢い代替) ---
-command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
+if command -v zoxide &>/dev/null && ! declare -f __zoxide_hook >/dev/null 2>&1; then
+    eval "$(zoxide init bash)"
+fi
 
 # ローカル設定（APIキー等、gitignore対象）
 [ -f "$HOME/.config/bash/exports.local.sh" ] && source "$HOME/.config/bash/exports.local.sh"

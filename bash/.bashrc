@@ -18,8 +18,8 @@ for f in exports aliases; do
 done
 
 # --- WSL専用設定 ---
-source "$HOME/dotfiles/scripts/detect_os.sh"
-if is_wsl; then
+[ -f "$HOME/dotfiles/scripts/detect_os.sh" ] && source "$HOME/dotfiles/scripts/detect_os.sh"
+if is_wsl 2>/dev/null; then
     [ -f "$BASH_CONFIG_DIR/wsl.sh" ] && source "$BASH_CONFIG_DIR/wsl.sh"
 fi
 
@@ -30,10 +30,12 @@ fi
     source /usr/share/bash-completion/completions/fzf
 
 # --- プロンプト (starship があれば使う、なければフォールバック) ---
-if command -v starship &>/dev/null; then
-    eval "$(starship init bash)"
-else
-    PS1='\[\e[32m\]\u@\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\$ '
+if [ -z "${STARSHIP_SHELL:-}" ]; then
+    if command -v starship &>/dev/null; then
+        eval "$(starship init bash)"
+    else
+        PS1='\[\e[32m\]\u@\h\[\e[0m\]:\[\e[34m\]\w\[\e[0m\]\$ '
+    fi
 fi
 
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
