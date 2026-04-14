@@ -19,6 +19,14 @@
 [alias]
     st = status
     lg = log --oneline --graph --decorate --all
+    d  = diff
+    ds = diff --staged
+    co = checkout
+    br = branch
+    pl = pull
+    rb = rebase
+    cp = cherry-pick
+    undo = reset HEAD~1 --mixed
 
 [core]
     pager = delta

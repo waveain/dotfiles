@@ -1,0 +1,106 @@
+# ~/.config/starship.toml
+# Catppuccin Mocha ベースの 2 行プロンプト
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[╭](bold #6c7086)\
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$rust\
+$docker_context\
+$cmd_duration\
+$line_break\
+[╰─](bold #6c7086)\
+$character"""
+
+# --- キャラクター ---
+[character]
+success_symbol = "[❯](bold #a6e3a1)"
+error_symbol   = "[❯](bold #f38ba8)"
+vimcmd_symbol  = "[❮](bold #89b4fa)"
+
+# --- ディレクトリ ---
+[directory]
+style            = "bold #89b4fa"
+truncation_length = 3
+truncate_to_repo = true
+read_only        = " 󰌾"
+read_only_style  = "#f38ba8"
+
+# --- Git ---
+[git_branch]
+symbol = " "
+style  = "bold #cba6f7"
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+style    = "bold #f9e2af"
+format   = "([$all_status$ahead_behind]($style) )"
+ahead    = "⇡${count}"
+behind   = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+modified = "!${count}"
+staged   = "+${count}"
+untracked = "?${count}"
+deleted  = "✘${count}"
+
+# --- 言語バージョン (該当ディレクトリのみ表示) ---
+[python]
+symbol = " "
+style  = "bold #f9e2af"
+format = "[$symbol$pyenv_prefix($version )($virtualenv )]($style)"
+
+[nodejs]
+symbol = " "
+style  = "bold #a6e3a1"
+format = "[$symbol($version )]($style)"
+
+[rust]
+symbol = " "
+style  = "bold #fab387"
+format = "[$symbol($version )]($style)"
+
+[docker_context]
+symbol = " "
+style  = "bold #89b4fa"
+format = "[$symbol$context]($style) "
+
+# --- コマンド実行時間 (3秒以上) ---
+[cmd_duration]
+min_time = 3000
+style    = "bold #6c7086"
+format   = "[ $duration]($style) "
+
+# --- OS アイコン ---
+[os]
+disabled = false
+style    = "bold #6c7086"
+
+[os.symbols]
+Linux   = " "
+Ubuntu  = " "
+Windows = " "
+Macos   = " "
+
+# --- ユーザー名 (SSH / root のときだけ表示) ---
+[username]
+show_always = false
+style_user  = "bold #a6e3a1"
+style_root  = "bold #f38ba8"
+format      = "[$user]($style)[@](bold #6c7086)"
+
+[hostname]
+ssh_only = true
+style    = "bold #89b4fa"
+format   = "[$hostname]($style) "
+
+# --- 無効化するモジュール ---
+[package]
+disabled = true

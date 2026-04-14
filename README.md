@@ -29,17 +29,24 @@ dotfiles/
 │               ├── treesitter.lua   # シンタックスハイライト
 │               ├── lsp.lua          # LSP + 補完 (mason/lspconfig/cmp)
 │               └── ui.lua           # lualine + neo-tree
+├── tmux/
+│   └── .tmux.conf             # tmux設定（C-a プレフィックス、hjkl移動）
+├── starship/
+│   └── .config/
+│       └── starship.toml      # Catppuccin Mocha 2行プロンプト
+├── editorconfig/
+│   └── .editorconfig          # エディタ間のスタイル統一
 ├── packages/
-│   └── apt.txt            # aptパッケージ一覧
+│   └── apt.txt                # aptパッケージ一覧
 ├── ssh/
 │   └── .ssh/
 │       └── config             # SSH設定（GitHub用）
 ├── mise/
 │   └── .config/mise/
-│       └── config.toml        # mise管理ツール設定（rust/python/uv）
+│       └── config.toml        # mise管理ツール設定（node/rust/python/uv）
 ├── scripts/
 │   ├── detect_os.sh           # OS検出ユーティリティ
-│   ├── install_extras.sh      # gh/eza/zoxide/mise/uv インストール
+│   ├── install_extras.sh      # gh/eza/zoxide/mise/uv/starship インストール
 │   └── setup_ssh.sh           # SSHキーセットアップ
 └── install.sh                 # セットアップスクリプト
 ```
@@ -48,17 +55,18 @@ dotfiles/
 
 | ツール | 用途 |
 |--------|------|
-| `fzf` | あいまい検索（Ctrl+R で履歴検索） |
+| `fzf` | あいまい検索（`Ctrl+R` 履歴、`Ctrl+T` ファイル、`Alt+C` ディレクトリ） |
 | `ripgrep` | 高速grep、neovimとの連携 |
 | `bat` | catの代替（シンタックスハイライト） |
 | `fd-find` | findの代替（高速・使いやすい） |
-| `tmux` | ターミナルマルチプレクサ |
+| `tmux` | ターミナルマルチプレクサ（プレフィックス `C-a`、`hjkl` でペイン移動） |
 | `jq` | JSON整形・パース |
 | `git-delta` | git diffの見やすい表示 |
 | `gh` | GitHub CLI |
 | `eza` | lsの代替（カラー・gitステータス表示） |
 | `zoxide` | cdの代替（頻繁に訪れるディレクトリへ即移動） |
-| `mise` | 開発ツールのバージョン管理（rust/python/uv等） |
+| `starship` | クロスシェルプロンプト（Catppuccin Mocha テーマ） |
+| `mise` | 開発ツールのバージョン管理（node/rust/python/uv等） |
 | `uv` | 高速Pythonパッケージマネージャ |
 
 ## セットアップ
@@ -79,9 +87,9 @@ cd ~/dotfiles
 `install.sh` は以下を行います：
 
 1. `apt.txt` に記載のパッケージをインストール
-2. `install_extras.sh` で gh / eza / zoxide / mise / uv をインストール
-3. GNU Stow でシンボリックリンクを作成（bash, git, ssh, nvim, mise）
-4. `mise install` で rust / python / uv をインストール
+2. `install_extras.sh` で gh / eza / zoxide / mise / uv / starship をインストール
+3. GNU Stow でシンボリックリンクを作成（bash, git, ssh, nvim, mise, tmux, starship, editorconfig）
+4. `mise install` で node / rust / python / uv をインストール
 
 完了後、設定を反映するには：
 

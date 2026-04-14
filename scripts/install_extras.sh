@@ -98,7 +98,18 @@ install_uv() {
     echo "    uv: installed"
 }
 
-echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide, node, mise, uv)..."
+# --- starship (クロスシェルプロンプト) ---
+install_starship() {
+    if command -v starship &>/dev/null; then
+        echo "    starship: already installed ($(starship --version | head -1))"
+        return
+    fi
+    echo "    Installing starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+    echo "    starship: installed"
+}
+
+echo "==> Installing extra tools (neovim 0.10+, gh, eza, zoxide, node, mise, uv, starship)..."
 install_neovim
 install_gh
 install_eza
@@ -106,4 +117,5 @@ install_zoxide
 install_nodejs
 install_mise
 install_uv
+install_starship
 echo "==> Extra tools installed."

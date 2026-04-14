@@ -48,7 +48,7 @@ backup_conflicts() {
 # --- Create symlinks (GNU Stow) ---
 echo "==> Creating symlinks..."
 cd "$DOTFILES_DIR"
-for dir in bash git ssh nvim mise; do
+for dir in bash git ssh nvim mise tmux starship editorconfig; do
     backup_conflicts "$dir"
     stow --target="$HOME" --restow "$dir"
     echo "    stow: $dir"

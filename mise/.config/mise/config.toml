@@ -1,4 +1,5 @@
 [tools]
+node    = "lts"
 rust    = "latest"
 python  = "latest"
 uv      = "latest"
