@@ -23,7 +23,7 @@ if command -v fzf &>/dev/null; then
 fi
 
 # --- mise (dev tools version manager) ---
-if [ -z "${MISE_SHELL:-}" ]; then
+if ! declare -f _mise_hook >/dev/null 2>&1; then
     if command -v mise &>/dev/null; then
         eval "$(mise activate bash)"
     elif [ -f "$HOME/.local/bin/mise" ]; then

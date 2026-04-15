@@ -30,7 +30,7 @@ fi
     source /usr/share/bash-completion/completions/fzf
 
 # --- プロンプト (starship があれば使う、なければフォールバック) ---
-if [ -z "${STARSHIP_SHELL:-}" ]; then
+if ! declare -f starship_precmd >/dev/null 2>&1; then
     if command -v starship &>/dev/null; then
         eval "$(starship init bash)"
     else
