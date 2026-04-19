@@ -23,6 +23,7 @@ return {
     },
     cmd = "Neotree",
     keys = {
+      { "<C-n>",     "<cmd>Neotree toggle<CR>", desc = "Toggle file tree" },
       { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Toggle file tree" },
     },
     opts = {

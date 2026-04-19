@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     opts = {
-      ensure_installed = { "lua_ls", "pyright", "ts_ls" },
+      ensure_installed = { "lua_ls", "pyright", "ts_ls", "rust_analyzer" },
       automatic_enable = true,  -- Neovim 0.11+: vim.lsp.enable() を自動呼び出し
     },
   },
@@ -29,6 +29,15 @@ return {
       vim.lsp.config("lua_ls", {
         settings = {
           Lua = { diagnostics = { globals = { "vim" } } },
+        },
+      })
+
+      vim.lsp.config("rust_analyzer", {
+        settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = true,
+            check = { command = "clippy" },
+          },
         },
       })
 
