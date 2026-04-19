@@ -1,16 +1,4 @@
 return {
-  -- nvimとtmuxペインをC-hjklでシームレス移動
-  {
-    "christoomey/vim-tmux-navigator",
-    cmd = { "TmuxNavigateLeft", "TmuxNavigateDown", "TmuxNavigateUp", "TmuxNavigateRight" },
-    keys = {
-      { "<C-h>", "<cmd>TmuxNavigateLeft<CR>",  desc = "Move to left pane/window" },
-      { "<C-j>", "<cmd>TmuxNavigateDown<CR>",  desc = "Move to lower pane/window" },
-      { "<C-k>", "<cmd>TmuxNavigateUp<CR>",    desc = "Move to upper pane/window" },
-      { "<C-l>", "<cmd>TmuxNavigateRight<CR>", desc = "Move to right pane/window" },
-    },
-  },
-
   -- git差分を行番号横に表示
   {
     "lewis6991/gitsigns.nvim",

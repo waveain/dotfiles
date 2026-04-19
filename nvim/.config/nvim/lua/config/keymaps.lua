@@ -10,6 +10,23 @@ map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 
 
+-- ウィンドウ/ペイン移動（nvimウィンドウ端ならtmuxペインへ）
+local function navigate(dir)
+  local win = vim.api.nvim_get_current_win()
+  vim.cmd("wincmd " .. dir)
+  if vim.api.nvim_get_current_win() == win and vim.env.TMUX then
+    vim.fn.system("tmux select-pane -" .. ({ h="L", j="D", k="U", l="R" })[dir])
+  end
+end
+map("n", "<C-h>", function() navigate("h") end, { desc = "Move left" })
+map("n", "<C-j>", function() navigate("j") end, { desc = "Move down" })
+map("n", "<C-k>", function() navigate("k") end, { desc = "Move up" })
+map("n", "<C-l>", function() navigate("l") end, { desc = "Move right" })
+-- VSCodeターミナルではC-j=Enterのため代替キーを追加
+if vim.env.TERM_PROGRAM == "vscode" then
+  map("n", "<C-w>j", function() navigate("j") end, { desc = "Move down (VSCode)" })
+end
+
 -- バッファ
 map("n", "<leader>bn", "<cmd>bnext<CR>",   { desc = "Next buffer" })
 map("n", "<leader>bp", "<cmd>bprev<CR>",   { desc = "Prev buffer" })

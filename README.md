@@ -97,6 +97,20 @@ cd ~/dotfiles
 source ~/.bashrc
 ```
 
+## 注意事項
+
+### VSCode ターミナルでの nvim ウィンドウ移動
+
+VSCode の統合ターミナルでは `Ctrl+J` が改行文字（0x0a）と同一のため、nvim に正しく伝わりません。
+下方向のウィンドウ移動には `<C-j>` の代わりに **`<C-w>j`** を使用してください。
+
+| 環境 | 下移動 |
+|------|--------|
+| tmux | `C-j` |
+| VSCode ターミナル | `C-w j` |
+
+その他の方向（`C-h` / `C-k` / `C-l`）は VSCode でもそのまま使えます。
+
 ## SSH設定（GitHub）
 
 `~/.ssh/config` はdotfilesで管理しています。秘密鍵は含まれません。
